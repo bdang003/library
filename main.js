@@ -1,15 +1,15 @@
 let myLibrary = [];
 
-myLibrary.push(new Book('hello','dude',2023));
-myLibrary.push(new Book('hell','dud',202));
-myLibrary.push(new Book('hel','du',20));
-
 initializePage();
 
 function initializePage(){
     const main = document.querySelector('#main');
     const library = document.querySelector('#library');
     createAddButton();  
+    if(!myLibrary.length){
+        window.alert(`looks like your library is empty. Let's add a book.`);
+        addBookToLibrary();
+    }
 }
 
 function createAddButton(){
