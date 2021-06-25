@@ -1,4 +1,7 @@
 let myLibrary = [];
+for(let i=0; i<5; i++){ //creates temp list of books for library
+    myLibrary.push(new Book(`book${i}`, `book${i}`));
+} //remove when you are ready to do without it
 
 initializePage();
 
@@ -6,9 +9,8 @@ function initializePage(){
     const main = document.querySelector('#main');
     const library = document.querySelector('#library');
     createAddButton();  
-    if(!myLibrary.length){
-        window.alert(`looks like your library is empty. Let's add a book.`);
-        addBookToLibrary();
+    for(let i=0; i<myLibrary.length; i++){
+        createBookDiv(myLibrary[i]);
     }
 }
 
@@ -19,18 +21,30 @@ function createAddButton(){
     addButton.onclick = function (){
         addBookToLibrary();
     }
-    main.appendChild(addButton);
+    main.appendChild(addButton); //attaches addButton to main
 }
 
-function Book(title, author, year){
+function Book(title, author){
     this.title= title
     this.author= author
-    this.year = year
 }
 
-function addBookToLibrary(){
-    var title = prompt('title', '');
-    var author = prompt('author', '');
-    var yearPublished = prompt(' year published', '');
-    myLibrary.push(new Book(title, author, yearPublished));
+function addBookToLibrary(){ //uses window.prompt to add new book
+    let title = prompt('title', 'default');
+    let author = prompt('author', 'default');
+    let newBook = new Book(title, author);
+    myLibrary.push(newBook);
+    createBookDiv(newBook); //create div with details
+}
+
+function createBookDiv(book){
+    let bookDiv = document.createElement('div');
+    bookDiv.classList.add('book');
+    let title = document.createElement('h1');
+    title.appendChild(document.createTextNode(book.title));
+    let author = document.createElement('h2');
+    author.appendChild(document.createTextNode(book.author));
+    bookDiv.appendChild(title);
+    bookDiv.appendChild(author);
+    library.appendChild(bookDiv);
 }
