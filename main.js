@@ -1,5 +1,5 @@
 let myLibrary = [];
-for(let i=0; i<3; i++){ //creates temp list of books for library
+for(let i=0; i<8; i++){ //creates temp list of books for library
     myLibrary.push(new Book(`book${i}`, `book${i}`));
 } //remove when you are ready to do without it
 
@@ -44,8 +44,12 @@ function createBookDiv(book){
     let bookDiv = document.createElement('div'); //creates book div
     bookDiv.classList.add('book');
     bookDiv.id = `${book.title.replace(/ +/g, "")+book.author.replace(/ +/g, "")}`; //adds id to allow for changes based on library[] 
-    let title = document.createElement('h1').appendChild(document.createTextNode(book.title));; //creates and attaches title
-    let author = document.createElement('h2').appendChild(document.createTextNode('By: ' + book.author));; //creates and attaches author
+    let title = document.createElement('div'); //creates and attaches title
+    title.innerHTML= book.title;
+    title.classList.add('bookText');
+    let author = document.createElement('div'); //creates and attaches author
+    author.innerHTML='By: ' + book.author;
+    author.classList.add('bookText');
     let readBtn = document.createElement('button'); //creates read button
     readBtn.id = `${book.title.replace(/ +/g, "")+book.author.replace(/ +/g, "")}ReadBtn`;
     if(book.readStatus) bookDiv.classList.add('beenRead'); //adds 'beenRead' status if needed
@@ -63,8 +67,8 @@ function createBookDiv(book){
 
 function changeReadStatus(book){ 
     book.readStatus = book.readStatus ? false : true; //changes read status
-    let targetBookDiv = document.querySelector(`#${book.title}${book.author}`); //finds div related to book
-    let targetBookReadBtn = document.querySelector(`#${book.title}${book.author}ReadBtn`);
+    let targetBookDiv = document.querySelector(`#${book.title.replace(/ +/g, "")+book.author.replace(/ +/g, "")}`); //finds div related to book
+    let targetBookReadBtn = document.querySelector(`#${book.title.replace(/ +/g, "")+book.author.replace(/ +/g, "")}ReadBtn`);
     book.readStatus ? targetBookReadBtn.innerHTML = "Read" : targetBookReadBtn.innerHTML = "Not Read";
     book.readStatus ? targetBookDiv.classList.add('beenRead') //add/remove beenRead class
                     : targetBookDiv.classList.remove('beenRead');

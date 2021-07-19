@@ -1,0 +1,51 @@
+body{
+    max-width: 100vw;
+    padding:0;
+    margin:0;
+    background: tomato;
+}
+
+#library{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin:0;
+    padding: 0;
+    height: auto;
+    background-color: green;
+}
+
+.book{
+    border: solid;
+    margin: 20px 0px;
+    padding:0;
+    width: 200px;
+    height: 300px;
+}
+
+.bookText{
+    height: 40%;
+    text-align: center;
+    align-content: center;
+}
+
+#form{
+    border: solid;
+    margin: 20px 0px;
+    padding:0;
+    width: 200px;
+    height: 300px;
+}
+
+button{
+    margin:0;
+    padding:0;
+    height: 20%;
+    width:50%;
+    background-color: wheat;
+}
+
+.beenRead{
+    background-color: teal;
+}
