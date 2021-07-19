@@ -69,6 +69,7 @@ function createBookDiv(book){
 
 function changeReadStatus(book){ 
     book.readStatus = book.readStatus ? false : true; //changes read status
+    localStorage.setItem("library", JSON.stringify(myLibrary));
     let targetBookDiv = document.querySelector(`#book${book.title.replace(/ +/g, "")+book.author.replace(/ +/g, "")}`); //finds div related to book
     let targetBookReadBtn = document.querySelector(`#book${book.title.replace(/ +/g, "")+book.author.replace(/ +/g, "")}ReadBtn`);
     book.readStatus ? targetBookReadBtn.innerHTML = "Read" : targetBookReadBtn.innerHTML = "Not Read";
