@@ -1,4 +1,8 @@
 let myLibrary = [];
+if(localStorage["library"]){
+    myLibrary = JSON.parse(localStorage.getItem("library"));
+}
+
 initializePage();
 
 function Book(title, author, readStatus){ //Book constructor
@@ -25,6 +29,7 @@ function addBookToLibrary(e){
     let newBook = new Book(title,author,readStatus);
     form.reset(); 
     myLibrary.push(newBook);
+    localStorage.setItem("library", JSON.stringify(myLibrary));
     createBookDiv(newBook);
     //alert(`${title} by ${author} is already in your library`);
 }
@@ -75,4 +80,5 @@ function removeBook(targetBook){
     let targetBookDiv = document.querySelector(`#book${targetBook.title.replace(/ +/g, "")+targetBook.author.replace(/ +/g, "")}`);
     targetBookDiv.remove();
     myLibrary.splice(myLibrary.indexOf(targetBook),1);
+    localStorage.setItem("library", JSON.stringify(myLibrary));
 }
