@@ -1,8 +1,4 @@
 let myLibrary = [];
-for(let i=0; i<8; i++){ //creates temp list of books for library
-    myLibrary.push(new Book(`book${i}`, `book${i}`));
-} //remove when you are ready to do without it
-
 initializePage();
 
 function Book(title, author, readStatus){ //Book constructor
@@ -27,9 +23,10 @@ function addBookToLibrary(e){
     let author = normalizeText(form.elements['author'].value);
     let readStatus = form.elements['readStatus'].value=='true'; //read status assign boolean true/false
     let newBook = new Book(title,author,readStatus);
+    form.reset(); 
     myLibrary.push(newBook);
     createBookDiv(newBook);
-    form.reset();
+    //alert(`${title} by ${author} is already in your library`);
 }
 
 function normalizeText(string){
