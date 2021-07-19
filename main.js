@@ -40,7 +40,7 @@ function normalizeText(string){
 function createBookDiv(book){
     let bookDiv = document.createElement('div'); //creates book div
     bookDiv.classList.add('book');
-    bookDiv.id = `${book.title.replace(/ +/g, "")+book.author.replace(/ +/g, "")}`; //adds id to allow for changes based on library[] 
+    bookDiv.id = `book${book.title.replace(/ +/g, "")+book.author.replace(/ +/g, "")}`; //adds id to allow for changes based on library[] 
     let title = document.createElement('div'); //creates and attaches title
     title.innerHTML= book.title;
     title.classList.add('bookText');
@@ -48,7 +48,7 @@ function createBookDiv(book){
     author.innerHTML='By: ' + book.author;
     author.classList.add('bookText');
     let readBtn = document.createElement('button'); //creates read button
-    readBtn.id = `${book.title.replace(/ +/g, "")+book.author.replace(/ +/g, "")}ReadBtn`;
+    readBtn.id = `book${book.title.replace(/ +/g, "")+book.author.replace(/ +/g, "")}ReadBtn`;
     if(book.readStatus) bookDiv.classList.add('beenRead'); //adds 'beenRead' status if needed
     book.readStatus ? readBtn.innerHTML='Read' : readBtn.innerHTML='Not Read'; //assign text based on read status
     readBtn.onclick = ()=>changeReadStatus(book); //attaches function to read button to change status and text
@@ -64,15 +64,15 @@ function createBookDiv(book){
 
 function changeReadStatus(book){ 
     book.readStatus = book.readStatus ? false : true; //changes read status
-    let targetBookDiv = document.querySelector(`#${book.title.replace(/ +/g, "")+book.author.replace(/ +/g, "")}`); //finds div related to book
-    let targetBookReadBtn = document.querySelector(`#${book.title.replace(/ +/g, "")+book.author.replace(/ +/g, "")}ReadBtn`);
+    let targetBookDiv = document.querySelector(`#book${book.title.replace(/ +/g, "")+book.author.replace(/ +/g, "")}`); //finds div related to book
+    let targetBookReadBtn = document.querySelector(`#book${book.title.replace(/ +/g, "")+book.author.replace(/ +/g, "")}ReadBtn`);
     book.readStatus ? targetBookReadBtn.innerHTML = "Read" : targetBookReadBtn.innerHTML = "Not Read";
     book.readStatus ? targetBookDiv.classList.add('beenRead') //add/remove beenRead class
                     : targetBookDiv.classList.remove('beenRead');
 }
 
 function removeBook(targetBook){
-    let targetBookDiv = document.querySelector(`#${targetBook.title.replace(/ +/g, "")+targetBook.author.replace(/ +/g, "")}`);
+    let targetBookDiv = document.querySelector(`#book${targetBook.title.replace(/ +/g, "")+targetBook.author.replace(/ +/g, "")}`);
     targetBookDiv.remove();
     myLibrary.splice(myLibrary.indexOf(targetBook),1);
 }
