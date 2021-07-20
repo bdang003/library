@@ -1,7 +1,5 @@
-let myLibrary = [];
-if(localStorage["library"]){
-    myLibrary = JSON.parse(localStorage.getItem("library"));
-}
+let myLibrary;
+localStorage["library"] ? myLibrary = JSON.parse(localStorage.getItem("library")) : myLibrary = [];
 
 initializePage();
 
