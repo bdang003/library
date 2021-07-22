@@ -64,26 +64,33 @@ function createBookDiv(book){
     author.innerHTML='By: ' + book.author;
     author.classList.add('bookText');
     let readBtn = document.createElement('button'); //creates read button
+    let notReadBtn = document.createElement('button');
     readBtn.id = `book${book.index}ReadBtn`;
+    notReadBtn.id = `book${book.index}NotReadBtn`;
     if(book.readStatus) bookDiv.classList.add('beenRead'); //adds 'beenRead' status if needed
-    book.readStatus ? readBtn.innerHTML='Read' : readBtn.innerHTML='Not Read'; //assign text based on read status
-    readBtn.onclick = ()=>changeReadStatus(book); //attaches function to read button to change status and text
+    readBtn.innerHTML = 'Read';
+    notReadBtn.innerHTML = 'Not Read';
+    readBtn.onclick = ()=>changeReadStatus(book,true); //attaches function to read button to change status and text
+    notReadBtn.onclick = ()=>changeReadStatus(book,false);
     let rmBtn = document.createElement('button'); //create remove button
-    rmBtn.innerHTML ='Remove';
+    rmBtn.id = "rmBtn";
+    rmBtn.innerHTML ='X';
     rmBtn.onclick = ()=>removeBook(book);
+    let rmBtnDiv = document.createElement('div'); //creates div for rmBtn to allow it to be align on right side
+    rmBtnDiv.id='rmBtnDiv';
+    rmBtnDiv.append(rmBtn);
+    bookDiv.appendChild(rmBtnDiv);
     bookDiv.appendChild(title);
     bookDiv.appendChild(author);
     bookDiv.appendChild(readBtn);
-    bookDiv.appendChild(rmBtn);
+    bookDiv.appendChild(notReadBtn);
     library.appendChild(bookDiv);
 }
 
-function changeReadStatus(book){ 
-    book.readStatus = book.readStatus ? false : true; //changes read status
+function changeReadStatus(book, readStatus){ 
+    book.readStatus = readStatus; //changes read status
     localStorage.setItem("library", JSON.stringify(myLibrary)); //stores 'read status' on local storage
     let targetBookDiv = document.querySelector(`#book${book.index}`); //finds div related to book
-    let targetBookReadBtn = document.querySelector(`#book${book.index}ReadBtn`);
-    book.readStatus ? targetBookReadBtn.innerHTML = "Read" : targetBookReadBtn.innerHTML = "Not Read"; //changes innerHTML to reflect change
     book.readStatus ? targetBookDiv.classList.add('beenRead') //adds/removes beenRead class for CSS
                     : targetBookDiv.classList.remove('beenRead');
     updateReadCount();
