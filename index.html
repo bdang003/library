@@ -1,21 +1,32 @@
 <!DOCTYPE html>
     <head> 
         <link rel='stylesheet' href='index.css'>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,300&display=swap" rel="stylesheet"> 
     </head>
+    <header>
+        <div id="logo">My Library</div> 
+        <div id="right">
+            <div id="readCount"></div>
+            <button id="reset" type="button">Reset</button>
+        </div>
+    </header>
     <div id='main'>
-        <header>
-            <div>Image placeholder</div> <button id="reset" type="button">Reset</button>
-        </header>
         <div id='library'>
             <form id="form">
-                <input type="text" id="title" placeholder="Title" required><br>
-                <input type="text" id="author" placeholder="Author" required><br>
-                <label for="read">Read Status:</label>
-                <select name="Read Status" id="readStatus">
-                    <option value='true'>Read</option>
-                    <option value='false'>Not Read</option>
-                </select><br>
-                <button type="">Submit</button>
+                <div id="formInputTop">
+                    <input type="text" id="title" placeholder="Title" required><br>
+                    <input type="text" id="author" placeholder="Author" required><br>
+                </div>
+                <div id="formInputBottom">
+                    <label for="read" id="formTitle">Read Status:</label>
+                    <select name="Read Status" id="readStatus">
+                        <option value='true'>Read</option>
+                        <option value='false'>Not Read</option>
+                    </select><br>
+                    <button id="submit" type="">Add to Library</button>
+                </div>
             </form>
         </div>
     </div>

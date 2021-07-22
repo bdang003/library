@@ -16,6 +16,8 @@ function initializePage(){
                                    localStorage.setItem('libIncrIndex', 0); 
     const main = document.querySelector('#main');
     const library = document.querySelector('#library');
+    const readCount = document.querySelector('#readCount');
+    updateReadCount();
     for(let i=0; i<myLibrary.length; i++){
         createBookDiv(myLibrary[i]);
     }
@@ -40,6 +42,7 @@ function addBookToLibrary(e){
         createBookDiv(newBook);
     }
     form.reset(); 
+    updateReadCount();
 }
 
 function normalizeText(string){
@@ -83,6 +86,7 @@ function changeReadStatus(book){
     book.readStatus ? targetBookReadBtn.innerHTML = "Read" : targetBookReadBtn.innerHTML = "Not Read"; //changes innerHTML to reflect change
     book.readStatus ? targetBookDiv.classList.add('beenRead') //adds/removes beenRead class for CSS
                     : targetBookDiv.classList.remove('beenRead');
+    updateReadCount();
 }
 
 function removeBook(targetBook){
@@ -90,6 +94,7 @@ function removeBook(targetBook){
     targetBookDiv.remove(); //removes book entry from user's page
     myLibrary.splice(myLibrary.indexOf(targetBook),1); //removes book entry from myLibrary[]
     localStorage.setItem("library", JSON.stringify(myLibrary)); //updates local storage library
+    updateReadCount();
 }
 
 function resetLibrary(){
@@ -100,4 +105,9 @@ function resetLibrary(){
     localStorage.clear();
     localStorage.setItem('libIncrIndex', 0);
     myLibrary = [];
+    updateReadCount();
+}
+
+function updateReadCount(){
+    readCount.innerHTML=`${myLibrary.filter(book=>book.readStatus == true).length} read / ${myLibrary.length} total`;
 }
