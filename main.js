@@ -17,9 +17,14 @@ function initializePage(){
     const main = document.querySelector('#main');
     const library = document.querySelector('#library');
     const readCount = document.querySelector('#readCount');
-    updateReadCount();
-    for(let i=0; i<myLibrary.length; i++){
-        createBookDiv(myLibrary[i]);
+    if(!myLibrary.length){
+        createTempLibrary();
+    }
+    else{
+        updateReadCount();
+        for(let i=0; i<myLibrary.length; i++){
+            createBookDiv(myLibrary[i]);
+        }
     }
     const form = document.querySelector('#form'); //creates form that allows user to add new book
     form.addEventListener('submit', addBookToLibrary); //submit button adds new book to library
@@ -117,4 +122,18 @@ function resetLibrary(){
 
 function updateReadCount(){
     readCount.innerHTML=`${myLibrary.filter(book=>book.readStatus == true).length} read / ${myLibrary.length} total`;
+}
+
+function createTempLibrary(){
+    let Book1 = new Book('temp1', 'To Kill a Mocking Bird', 'Harper Lee', true);
+    myLibrary.push(Book1); //adds new book entry to library
+    createBookDiv(Book1);
+    let Book2 = new Book('temp2', 'The Great Gatsby', 'F. Scott Fitzgerald', true);
+    myLibrary.push(Book2); //adds new book entry to library
+    createBookDiv(Book2);
+    let Book3 = new Book('temp3', 'One Hundred Years of Solitude', 'Gabriel García Márquez', false);
+    myLibrary.push(Book3); //adds new book entry to library
+    createBookDiv(Book3);
+    localStorage.setItem("library", JSON.stringify(myLibrary)); //stores on local storage
+    updateReadCount();
 }
