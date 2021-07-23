@@ -20,11 +20,9 @@ function initializePage(){
     if(!myLibrary.length){
         createTempLibrary();
     }
-    else{
-        updateReadCount();
-        for(let i=0; i<myLibrary.length; i++){
-            createBookDiv(myLibrary[i]);
-        }
+    updateReadCount();
+    for(let i=0; i<myLibrary.length; i++){
+        createBookDiv(myLibrary[i]);
     }
     const form = document.querySelector('#form'); //creates form that allows user to add new book
     form.addEventListener('submit', addBookToLibrary); //submit button adds new book to library
@@ -50,7 +48,7 @@ function addBookToLibrary(e){
     updateReadCount();
 }
 
-function normalizeText(string){
+function normalizeText(string){ //capitalizes the first letter of each word. Warning: will lowercase all other letters of the word
     let str = string.toLowerCase().split(/\s+/);
     for(let i=0; i<str.length; i++){
         str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
@@ -60,29 +58,29 @@ function normalizeText(string){
 
 function createBookDiv(book){
     let bookDiv = document.createElement('div'); //creates book div
-    bookDiv.classList.add('book');
-    bookDiv.id = `book${book.index}`; //adds id to allow for changes based on library[] 
+        bookDiv.classList.add('book');
+        bookDiv.id = `book${book.index}`; //adds id to allow for changes based on library[] 
     let title = document.createElement('div'); //creates and attaches title div
-    title.innerHTML= book.title;
-    title.classList.add('bookText');
+        title.innerHTML= book.title;
+        title.classList.add('bookText');
     let author = document.createElement('div'); //creates and attaches author div
-    author.innerHTML='By: ' + book.author;
-    author.classList.add('bookText');
+        author.innerHTML='By: ' + book.author;
+        author.classList.add('bookText');
     let readBtn = document.createElement('button'); //creates read button
     let notReadBtn = document.createElement('button');
-    readBtn.id = `book${book.index}ReadBtn`;
-    notReadBtn.id = `book${book.index}NotReadBtn`;
-    if(book.readStatus) bookDiv.classList.add('beenRead'); //adds 'beenRead' status if needed
-    readBtn.innerHTML = 'Read';
-    notReadBtn.innerHTML = 'Not Read';
-    readBtn.onclick = ()=>changeReadStatus(book,true); //attaches function to read button to change status and text
-    notReadBtn.onclick = ()=>changeReadStatus(book,false);
+        readBtn.id = `book${book.index}ReadBtn`;
+        notReadBtn.id = `book${book.index}NotReadBtn`;
+        if(book.readStatus) bookDiv.classList.add('beenRead'); //adds 'beenRead' status if needed
+        readBtn.innerHTML = 'Read';
+        notReadBtn.innerHTML = 'Not Read';
+        readBtn.onclick = ()=>changeReadStatus(book,true); //attaches function to read button to change status and text
+        notReadBtn.onclick = ()=>changeReadStatus(book,false);
     let rmBtn = document.createElement('button'); //create remove button
-    rmBtn.id = "rmBtn";
-    rmBtn.innerHTML ='X';
-    rmBtn.onclick = ()=>removeBook(book);
+        rmBtn.id = "rmBtn";
+        rmBtn.innerHTML ='X';
+        rmBtn.onclick = ()=>removeBook(book);
     let rmBtnDiv = document.createElement('div'); //creates div for rmBtn to allow it to be align on right side
-    rmBtnDiv.id='rmBtnDiv';
+        rmBtnDiv.id='rmBtnDiv';
     rmBtnDiv.append(rmBtn);
     bookDiv.appendChild(rmBtnDiv);
     bookDiv.appendChild(title);
@@ -103,13 +101,13 @@ function changeReadStatus(book, readStatus){
 
 function removeBook(targetBook){
     let targetBookDiv = document.querySelector(`#book${targetBook.index}`);
-    targetBookDiv.remove(); //removes book entry from user's page
+    targetBookDiv.remove(); //removes book div from user's page
     myLibrary.splice(myLibrary.indexOf(targetBook),1); //removes book entry from myLibrary[]
     localStorage.setItem("library", JSON.stringify(myLibrary)); //updates local storage library
     updateReadCount();
 }
 
-function resetLibrary(){
+function resetLibrary(){ //clears all book divs, clear local storage, sets myLibrary to empty array
     myLibrary.forEach(book=>{
         let targetBook = document.querySelector(`#book${book.index}`);
         targetBook.remove();
@@ -124,16 +122,12 @@ function updateReadCount(){
     readCount.innerHTML=`${myLibrary.filter(book=>book.readStatus == true).length} read / ${myLibrary.length} total`;
 }
 
-function createTempLibrary(){
-    let Book1 = new Book('temp1', 'To Kill a Mocking Bird', 'Harper Lee', true);
+function createTempLibrary(){ //If user boots up library with an empty myLibrary, it will populate 3 books automatically
+    let Book1 = new Book('temp1', 'To Kill a Mocking Bird', 'Harper Lee', false);
     myLibrary.push(Book1); //adds new book entry to library
-    createBookDiv(Book1);
-    let Book2 = new Book('temp2', 'The Great Gatsby', 'F. Scott Fitzgerald', true);
+    let Book2 = new Book('temp2', 'The Great Gatsby', 'F. Scott Fitzgerald', false);
     myLibrary.push(Book2); //adds new book entry to library
-    createBookDiv(Book2);
     let Book3 = new Book('temp3', 'One Hundred Years of Solitude', 'Gabriel García Márquez', false);
     myLibrary.push(Book3); //adds new book entry to library
-    createBookDiv(Book3);
     localStorage.setItem("library", JSON.stringify(myLibrary)); //stores on local storage
-    updateReadCount();
 }
