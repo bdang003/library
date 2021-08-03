@@ -16,17 +16,17 @@ const Library = (() => {
         const main = document.querySelector('#main');
         const library = document.querySelector('#library');
         const readCount = document.querySelector('#readCount');
-        if(!myLibrary.length){
+        if(!myLibrary.length){ //if library is empty, initalizes myLibrary with 3 pre-made books
             createTempLibrary();
         }
         updateReadCount();
-        for(let i=0; i<myLibrary.length; i++){
+        for(let i=0; i<myLibrary.length; i++){ //creates html books for each book in myLibrary
             createBookDiv(myLibrary[i]);
         }
         const form = document.querySelector('#form'); //creates form that allows user to add new book
         form.addEventListener('submit', addBookToLibrary); //submit button adds new book to library
         const reset = document.querySelector('#reset');
-        reset.onclick=()=>resetLibrary();
+        reset.onclick=()=>resetLibrary(); //reset button will reset library on click
     })();
     
     function addBookToLibrary(e){ 
